@@ -1,0 +1,26 @@
+<package>
+  <description brief="newarm">
+    Driver software for the new low-cost arm constructed for Intel Labs Seattle by
+    Alium Labs.
+  </description>
+  <author>Brian Mayton</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>https://dev.bdm.cc/projects/gambit/wiki/gambit_driver</url>
+  <depend package="roscpp"/>
+  <depend package="dynamixel"/>
+  <depend package="copley"/>
+  <depend package="safetyboard"/>
+  <depend package="sensor_msgs"/>
+  <depend package="urdf"/>
+  <depend package="robot_state_publisher"/>
+  <depend package="smoothing"/>
+  <depend package="gambit_msgs"/>
+
+  <export>
+	<cpp cflags="-I${prefix}/include" lflags="-L${prefix}/lib -lgambit_driver"/>
+  </export>
+
+</package>
+
+

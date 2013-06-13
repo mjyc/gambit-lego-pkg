@@ -1,0 +1,20 @@
+<package>
+  <description brief="armlib">
+
+     armlib
+
+  </description>
+  <author>Brian Mayton</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/armlib</url>
+  <depend package="roscpp"/>
+  <depend package="gambit_msgs"/>
+
+  <export>
+    <cpp cflags="-I${prefix}/include" lflags="-L${prefix}/lib -larmlib"/>
+  </export>
+
+</package>
+
+

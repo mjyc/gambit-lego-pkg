@@ -1,0 +1,17 @@
+<package>
+  <description brief="gambit_gazebo_driver">
+
+     gambit_gazebo_driver
+
+  </description>
+  <author>Michael Jae-Yoon Chung</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/gambit_gazebo_driver</url>
+  <depend package="roscpp"/>
+  <!--<depend package="armsim"/>-->
+  <depend package="gambit_driver"/>
+
+</package>
+
+

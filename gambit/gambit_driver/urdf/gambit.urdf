@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<robot name="wam">
+
+    <link name="arm0">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.57079633 0 1.57079633" />
+            <geometry name="base-geom">
+                <mesh filename="package://gambit_driver/models/arm0.stl"/>
+            </geometry>
+            <material name="base-mat">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="arm1">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.5708 0 -1.5708" />
+            <geometry name="torso-geom">
+                <mesh filename="package://gambit_driver/models/arm1.stl"/>
+            </geometry>
+            <material name="torso-mat">
+                <color rgba="0.83 0.80 0.67 1.0"/>
+            </material>
+        </visual>
+    </link>
+    <link name="arm2">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.5708 0 1.5708" />
+            <geometry name="upper_arm-geom">
+                <mesh filename="package://gambit_driver/models/arm2.stl" />
+            </geometry>
+            <material name="upper_arm-mat">
+                <color rgba="0.6 0.6 0.6 1.0"/>
+            </material>
+        </visual>
+    </link>
+    <link name="arm3">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.5708 0 -1.5708" />
+            <geometry name="forearm-geom">
+                <mesh filename="package://gambit_driver/models/arm3.stl" />
+            </geometry>
+            <material name="forearm-mat">
+                <color rgba="0.7 0.7 0.7 1.0"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="wrist1">
+        <visual>
+            <origin xyz="0 0 0" rpy="3.14159 0 1.5708"/>
+            <geometry name="wrist_cover">
+                <mesh filename="package://gambit_driver/models/wrist1.stl"/>
+            </geometry>
+            <material name="wrist_cover">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
+        </visual>
+    </link>
+    <link name="wrist2">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+            <geometry name="wrist2_geom">
+                <mesh filename="package://gambit_driver/models/wrist2.stl"/>
+            </geometry>
+            <material name="wrist2_mat">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="wrist3">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+            <geometry name="wrist3_geom">
+                <mesh filename="package://gambit_driver/models/wrist3.stl"/>
+            </geometry>
+            <material name="wrist3_mat">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
+        </visual>
+    </link>
+    
+    <link name="gripper_left">
+        <visual>
+            <origin xyz="-0.012 -0.02 0.04" rpy="0 3.14159 -1.5708"/>
+            <geometry name="gripper_left_geom">
+                <mesh filename="package://gambit_driver/models/finger_jaw.stl"/>
+            </geometry>
+            <material name="gripper_left_mat">
+                <color rgba="0.9 0.9 0.9 1.0"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="gripper_right">
+        <visual>
+            <origin xyz="0.012 0.02 0.04" rpy="0 3.14159 1.5708"/>
+            <geometry name="gripper_right_geom">
+                <mesh filename="package://gambit_driver/models/finger_jaw.stl"/>
+            </geometry>
+            <material name="gripper_right_mat">
+                <color rgba="0.9 0.9 0.9 1.0"/>
+            </material>
+        </visual>
+    </link>
+
+    <!-- for debug -->
+    <link name="gripper_link"/>
+    <link name="gripper_tip"/>
+
+    <!-- TODO: fix next two link tags to new setup -->
+    <!-- link name="cameramount">
+        <visual>
+            <origin xyz="-0.019 0 0.001" rpy="0 0 1.5708"/>
+            <geometry name="cameramount_geom">
+                <mesh filename="package://gambit_driver/models/cameramount.stl"/>
+            </geometry>
+            <material name="cameramount_mat">
+                <color rgba="0.3 0.3 0.3 1.0"/>
+            </material>
+        </visual>
+    </link-->
+
+    <!--link name="primesensor_frame">
+        <visual>
+            <origin xyz="0.03 0 -0.03" rpy="0 1.5708 0"/>
+            <geometry name="primesensor_geom">
+                <mesh filename="package://gambit_driver/models/primesensor.stl"/>
+            </geometry>
+            <material name="primesensor_mat">
+                <color rgba="0.2 0.2 0.2 1.0"/>
+            </material>
+        </visual>
+    </link-->
+
+
+    <joint name="waist" type="continuous">
+        <parent link="arm0"/>
+        <child link="arm1"/>
+        <axis xyz="0 0 1"/>
+        <origin xyz="0 0 .0005" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="shoulder" type="continuous">
+        <parent link="arm1"/>
+        <child link="arm2"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="0.160 -0.0305 0.3955" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="elbow" type="continuous">
+        <parent link="arm2"/>
+        <child link="arm3"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="0.0 -0.03 0.275" rpy="0 0 0"/>
+    </joint>
+
+
+    <joint name="wrist_roll" type="revolute">
+        <parent link="arm3"/>
+        <child link="wrist1"/>
+        <limit lower="-2.617" upper="2.617" effort="2.775" velocity="8.3"/>
+        <axis xyz="0 0 1"/>
+        <origin xyz="0 -0.037 0.260" rpy="0 0 0"/>
+    </joint>
+    <joint name="wrist_pitch" type="revolute">
+        <parent link="wrist1"/>
+        <child link="wrist2"/>
+        <limit lower="-1.57" upper="1.57" effort="2.775" velocity="8.3"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="wrist_yaw" type="revolute">
+        <parent link="wrist2"/>
+        <child link="wrist3"/>
+        <limit lower="-2.617" upper="2.617" effort="2.775" velocity="8.3"/>
+        <axis xyz="0 0 1"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="gripper_left" type="prismatic">
+        <parent link="wrist3"/>
+        <child link="gripper_left"/>
+        <limit lower="-0.1" upper="0.1" effort="2.775" velocity="8.3"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="0 0 0.08"/>
+    </joint>
+    
+    <joint name="gripper_right" type="prismatic">
+        <parent link="wrist3"/>
+        <child link="gripper_right"/>
+        <limit lower="-0.1" upper="0.1" effort="2.775" velocity="8.3"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="0 0 0.08"/>
+    </joint>
+
+	<!-- for debug -->
+    <joint name="gripper_link" type="fixed">
+        <parent link="gripper_left"/>
+        <child link="gripper_link"/>
+        <origin xyz="0 0 0" rpy="0 -1.57079632679 -3.14159265359"/>
+    </joint>
+
+    <joint name="gripper_tip" type="fixed">
+        <parent link="gripper_link"/>
+        <child link="gripper_tip"/>
+        <origin xyz="0.065 0.019 0"/>
+    </joint>
+
+    
+    <!-- joint name="camera_mount_attachment" type="fixed">
+        <parent link="arm1"/>
+        <child link="cameramount"/>
+        <origin xyz="0.160 0.028 .396"/>
+    </joint -->
+    
+    <!-- joint name="primesensor_attachment" type="fixed">
+        <parent link="cameramount"/>
+        <child link="primesensor_frame"/>
+        <origin xyz="-0.040 .025 .235" rpy="-2.373651 0 1.5708"/>
+    </joint -->
+
+</robot>

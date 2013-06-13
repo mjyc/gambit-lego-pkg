@@ -1,0 +1,104 @@
+Axes.Enabled=0
+Axes.Length=0.1
+Axes.Radius=0.01
+Axes.Reference\ Frame=/arm0
+Background\ ColorB=0
+Background\ ColorG=0
+Background\ ColorR=0
+Camera\ Config=0.550591 5.47315 3.43357 0.402528 0.248714 -0.275671
+Camera\ Type=rviz::OrbitViewController
+Fixed\ Frame=/arm0
+Gambit.Alpha=1
+Gambit.Collision\ Enabled=0
+Gambit.Enabled=1
+Gambit.Robot\ Description=/arm/robot_description
+Gambit.TF\ Prefix=
+Gambit.Update\ Interval=0
+Gambit.Visual\ Enabled=1
+KinectAxis.Enabled=1
+KinectAxis.Length=0.1
+KinectAxis.Radius=0.01
+KinectAxis.Reference\ Frame=/camera_rgb_optical_frame
+KinectPointCloud2..AxisColorAutocompute\ Value\ Bounds=1
+KinectPointCloud2..AxisColorAxis=2
+KinectPointCloud2..AxisColorMax\ Value=10
+KinectPointCloud2..AxisColorMin\ Value=-10
+KinectPointCloud2..AxisColorUse\ Fixed\ Frame=1
+KinectPointCloud2..FlatColorColorB=1
+KinectPointCloud2..FlatColorColorG=1
+KinectPointCloud2..FlatColorColorR=1
+KinectPointCloud2..IntensityAutocompute\ Intensity\ Bounds=1
+KinectPointCloud2..IntensityChannel\ Name=intensity
+KinectPointCloud2..IntensityMax\ ColorB=1
+KinectPointCloud2..IntensityMax\ ColorG=1
+KinectPointCloud2..IntensityMax\ ColorR=1
+KinectPointCloud2..IntensityMax\ Intensity=4096
+KinectPointCloud2..IntensityMin\ ColorB=0
+KinectPointCloud2..IntensityMin\ ColorG=0
+KinectPointCloud2..IntensityMin\ ColorR=0
+KinectPointCloud2..IntensityMin\ Intensity=0
+KinectPointCloud2..IntensityUse\ full\ RGB\ spectrum=0
+KinectPointCloud2.Alpha=1
+KinectPointCloud2.Billboard\ Size=0.01
+KinectPointCloud2.Color\ Transformer=RGB8
+KinectPointCloud2.Decay\ Time=0
+KinectPointCloud2.Enabled=0
+KinectPointCloud2.Position\ Transformer=XYZ
+KinectPointCloud2.Queue\ Size=10
+KinectPointCloud2.Selectable=1
+KinectPointCloud2.Style=0
+KinectPointCloud2.Topic=/camera/depth_registered/points
+LastBlock.Enabled=0
+LastBlock.Marker\ Topic=/last_markers_out
+LastBlock.Queue\ Size=100
+Property\ Grid\ Splitter=502,78
+Property\ Grid\ State=expanded=.Global Options,Gambit.Enabled,Axes.Enabled;splitterratio=0.5
+QMainWindow=000000ff00000000fd00000003000000000000017400000296fc0200000001fb000000100044006900730070006c006100790073010000001d00000296000000ee00ffffff000000010000013100000296fc0200000003fb0000001e0054006f006f006c002000500072006f0070006500720074006900650073010000001d000000bf0000006700fffffffb0000000a0056006900650077007301000000e20000010c000000bb00fffffffb0000001200530065006c0065006300740069006f006e01000001f4000000bf0000006700ffffff00000003000004dd0000003efc0100000001fb0000000800540069006d00650100000000000004dd000002bf00ffffff0000022c0000029600000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+TablePlaneAxes.Enabled=1
+TablePlaneAxes.Length=0.1
+TablePlaneAxes.Radius=0.01
+TablePlaneAxes.Reference\ Frame=/table_plane
+TablePlaneGrid.Alpha=0.5
+TablePlaneGrid.Cell\ Size=0.5
+TablePlaneGrid.ColorB=0.898039
+TablePlaneGrid.ColorG=0.898039
+TablePlaneGrid.ColorR=0.898039
+TablePlaneGrid.Enabled=1
+TablePlaneGrid.Line\ Style=0
+TablePlaneGrid.Line\ Width=0.03
+TablePlaneGrid.Normal\ Cell\ Count=0
+TablePlaneGrid.OffsetX=0
+TablePlaneGrid.OffsetY=0
+TablePlaneGrid.OffsetZ=0
+TablePlaneGrid.Plane=0
+TablePlaneGrid.Plane\ Cell\ Count=10
+TablePlaneGrid.Reference\ Frame=/table_plane
+Target\ Frame=/table_plane
+Tool\ 2D\ Nav\ GoalTopic=goal
+Tool\ 2D\ Pose\ EstimateTopic=initialpose
+[Display0]
+ClassName=rviz::RobotModelDisplay
+Name=Gambit
+[Display1]
+ClassName=rviz::GridDisplay
+Name=TablePlaneGrid
+[Display2]
+ClassName=rviz::AxesDisplay
+Name=TablePlaneAxes
+[Display3]
+ClassName=rviz::PointCloud2Display
+Name=KinectPointCloud2
+[Display4]
+ClassName=rviz::AxesDisplay
+Name=KinectAxis
+[Display5]
+ClassName=rviz::MarkerDisplay
+Name=LastBlock
+[Display6]
+ClassName=rviz::AxesDisplay
+Name=Axes
+[Window]
+Height=795
+Width=1261
+X=1305
+Y=812

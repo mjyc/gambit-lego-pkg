@@ -1,0 +1,11 @@
+uint32 movementID
+
+uint32 BACK = 0
+uint32 FRONT = 1
+uint32 MANIPREADY = 2
+uint32 OFFVIEW = 3
+---
+uint32 retval
+
+uint32 SUCCESS = 0
+uint32 FAIL = 1

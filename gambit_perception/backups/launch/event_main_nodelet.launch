@@ -1,0 +1,5 @@
+<launch>
+  <!-- openni_launch must be running -->
+  <node pkg="nodelet" type="nodelet" name="event_main_nodelet" args="load gambit_perception/event_main_nodelet camera_nodelet_manager" output="screen">
+  </node>
+</launch>

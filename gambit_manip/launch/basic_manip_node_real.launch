@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <group ns="arm">
+        <node pkg="gambit_manip" type="basic_manip" name="basic_manip_node" output="screen"/>
+    </group>
+
+</launch>

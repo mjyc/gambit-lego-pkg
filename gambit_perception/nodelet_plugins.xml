@@ -1,0 +1,11 @@
+<library path="lib/libgambit_perception">
+
+  <class name="gambit_perception/convert_pointcloud_imgdep"
+		 type="gambit_perception::ConvertPointCloud2ImgDep"
+		 base_class_type="nodelet::Nodelet">
+	<description>
+	  Event main
+	</description>
+  </class>
+
+</library>

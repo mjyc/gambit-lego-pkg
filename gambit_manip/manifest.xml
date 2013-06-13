@@ -1,0 +1,20 @@
+<package>
+  <description brief="gambit_manip">
+
+     gambit_manip
+
+  </description>
+  <author>Mike Chung</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/gambit_manip</url>
+  <depend package="roscpp"/>
+  <depend package="armlib"/>
+  <depend package="visualization_msgs"/>
+  <depend package="tf"/>
+  <depend package="sound_play"/>
+  <depend package="opencv2"/>
+
+</package>
+
+

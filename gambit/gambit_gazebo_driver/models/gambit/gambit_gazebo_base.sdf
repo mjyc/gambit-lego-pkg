@@ -1,0 +1,99 @@
+<?xml version='1.0'?>
+<sdf version='1.3'>
+  <model name='gambit'>
+
+	<static>false</static>
+
+
+    <link name='arm0'>
+      <pose>0.000000 0.000000 0.000000 0.000000 0.000000 0.000000</pose>
+
+      <collision name='arm0_collision'>
+        <pose>0.000000 0.000000 0.000000 1.570800 -0.000000 1.570800</pose>
+        <geometry>
+          <mesh>
+            <scale>1.000000 1.000000 1.000000</scale>
+	  		<uri>model://gambit/meshes/arm0.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+
+      <visual name='arm0_vis'>
+        <pose>0.000000 0.000000 0.000000 1.570800 -0.000000 1.570800</pose>
+		<geometry>
+          <mesh>
+            <scale>1.000000 1.000000 1.000000</scale>
+            <uri>model://gambit/meshes/arm0.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <link name='arm1'>
+      <pose>0.000000 0.000000 0.000500 0.000000 0.000000 0.000000</pose>
+
+      <collision name='arm1_collision'>
+        <pose>0.000000 0.000000 0.000000 1.570800 0.000000 -1.570800</pose>
+        <geometry>
+          <mesh>
+            <scale>1.000000 1.000000 1.000000</scale>
+			<uri>model://gambit/meshes/arm1.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+
+      <visual name='arm1_vis'>
+        <pose>0.000000 0.000000 0.000000 1.570800 0.000000 -1.570800</pose>
+        <geometry>
+          <mesh>
+            <scale>1.000000 1.000000 1.000000</scale>
+            <uri>model://gambit/meshes/arm1.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+
+    <joint name='waist' type='revolute'>
+      <child>arm1</child>
+      <parent>arm0</parent>
+      <axis>
+        <xyz>0.000000 0.000000 1.000000</xyz>
+        <limit>
+          <lower>-10000000000000000.000000</lower>
+          <upper>10000000000000000.000000</upper>
+        </limit>
+      </axis>
+    </joint>
+
+  </model>
+</sdf>
+
+
+
+      <!-- <inertial> -->
+      <!--   <pose>2.000000 0.000000 0.000000 0.000000 0.000000 0.000000</pose> -->
+      <!--   <mass>1.000000</mass> -->
+      <!--   <inertia> -->
+      <!--     <ixx>1.000000</ixx> -->
+      <!--     <ixy>0.000000</ixy> -->
+      <!--     <ixz>0.000000</ixz> -->
+      <!--     <iyy>1.000000</iyy> -->
+      <!--     <iyz>0.000000</iyz> -->
+      <!--     <izz>1.000000</izz> -->
+      <!--   </inertia> -->
+      <!-- </inertial> -->
+
+
+      <!-- <inertial> -->
+      <!--   <pose>2.000000 0.000000 0.000000 0.000000 0.000000 0.000000</pose> -->
+      <!--   <mass>1.000000</mass> -->
+      <!--   <inertia> -->
+      <!--     <ixx>1.000000</ixx> -->
+      <!--     <ixy>0.000000</ixy> -->
+      <!--     <ixz>0.000000</ixz> -->
+      <!--     <iyy>1.000000</iyy> -->
+      <!--     <iyz>0.000000</iyz> -->
+      <!--     <izz>1.000000</izz> -->
+      <!--   </inertia> -->
+      <!-- </inertial> -->

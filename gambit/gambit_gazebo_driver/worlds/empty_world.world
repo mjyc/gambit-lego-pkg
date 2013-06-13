@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<sdf version="1.3">
+  <world name="default">
+
+	<physics type="ode">
+	  <ode>
+		<solver>
+		  <iters>100</iters>
+		</solver>
+	  </ode>
+	</physics>
+
+	<!-- <physics type="ode"> -->
+	<!--   <update_rate>100.0</update_rate> -->
+	<!--   <ode> -->
+	<!-- 	<solver> -->
+	<!-- 	  <dt>0.01</dt> -->
+	<!-- 	  <iters>100</iters> -->
+	<!-- 	</solver> -->
+	<!--   </ode> -->
+	<!-- </physics> -->
+
+	<include>
+	  <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+	  <uri>model://sun</uri>
+    </include>
+
+	<include>
+	  <uri>model://gambit</uri>
+    </include>
+
+	<!-- <include> -->
+	<!--   <uri>model://testbox</uri> -->
+    <!-- </include> -->
+
+  </world>
+</sdf>

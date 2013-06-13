@@ -1,0 +1,194 @@
+echo "i 0x0014 e" > /dev/pcan0
+sudo ifconfig can0 up
+
+
+cd /home/ubuntu/canFestival/CanFestival-3-609aff93810a/examples/CANOpenShell
+./CANOpenShell load#../../drivers/can_socket/libcanfestival_can_socket.so,can0,1M,1,0
+
+
+# read control register
+rsdo#01,6040,0
+
+#write control register
+wsdo#01,6040,0,2,000F
+
+# read status word
+rsdo#01,6041,0
+# read manufacturers status
+rsdo#01,1002,0
+
+#read mode of operation
+rsdo#01,6060,0
+#write mode of operation
+wsdo#01,6060,0,1,1
+
+#read desired state
+
+
+#clear latched event status register
+wsdo#01,2181,0,4,FFFFFFFF
+#read latched event status register
+rsdo#01,2181,0
+#read mfg event status register
+rsdo#01,1002,0
+
+#read desired state
+rsdo#01,2300,0
+#write desired state
+wsdo#01,2300,0,2,0030
+
+
+#reset
+scan
+srst#f
+#write desired state
+wsdo#f,2300,0,2,1e
+#set homing method
+wsdo#f,6098,0,1,0
+#homing mode
+wsdo#f,6060,0,1,6
+#start node
+ssta#f
+#control word
+wsdo#f,6040,0,2,001f
+#read status word, verify homed (?=1637) 
+rsdo#f,6041,0
+#profile position mode
+wsdo#f,6060,0,1,1
+#do the move
+wsdo#f,6040,0,2,000f
+wsdo#f,607a,0,4,80000
+wsdo#f,6040,0,2,001f
+
+
+#linear interpolation constant time
+#reset
+scan
+srst#f
+#write desired state
+wsdo#f,2300,0,2,1e
+#set homing method
+wsdo#f,6098,0,1,0
+#homing mode
+wsdo#f,6060,0,1,6
+#start node
+ssta#f
+#control word
+wsdo#f,6040,0,2,001f
+#read status word, verify homed (?=1637) 
+rsdo#f,6041,0
+
+#interpolated position mode pg59
+wsdo#f,6060,0,1,7
+#set tracking error window
+wsdo#f,2120,0,4,1fffffff
+#interpolation submode (linear interp with constant time) pg 189
+wsdo#f,60c0,0,2,0
+#interpolation constant time setup (pg 190)
+wsdo#f,60c2,1,1,7f
+#bit 4 to 0
+wsdo#f,6040,0,2,000f
+# now a series of positions
+wsdo#f,60c1,1,4,0
+wsdo#f,60c1,1,4,1000
+wsdo#f,60c1,1,4,2000
+wsdo#f,60c1,1,4,3000
+wsdo#f,60c1,1,4,4000
+#start
+wsdo#f,6040,0,2,001f
+
+
+
+wsdo#f,6040,0,2,001f
+
+
+clear faults
+wsdo#f,6040,0,2,70
+wsdo#f,6040,0,2,0f
+
+
+# how many position slots are avail?
+rsdo#f,2011,0
+rsdo#f,2012,0
+rsdo#f,6040,0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ try to set up a xmit pdo
+#disable pdo
+wsdo#f,1800,1,4,80000180
+#event
+wsdo#f,1800,2,1,ff
+# map
+wsdo#f,1a00,0,1,0
+wsdo#f,1a00,1,4,60400010
+wsdo#f,1a00,0,1,1
+
+
+# set up sync (pg44)
+wsdo#f,1005,0,4,40000080
+# 5 sec period (4c4b40)
+wsdo#f,1006,0,4,4c4b40 
+
+## try to set up a xmit pdo (current motor position 0x6063 pg 114)
+#disable pdo (pg 34)
+wsdo#f,1800,1,4,8000018f
+#event (every sync)
+wsdo#f,1800,2,1,1
+# map (pg 35)
+# disable pdo
+wsdo#f,1a00,0,1,0 
+#map
+wsdo#f,1a00,1,4,60630020
+#enable
+wsdo#f,1a00,0,1,1
+#enable pso
+wsdo#f,1800,1,4,0000018f
+
+
+
+
+## try to set up a xmit pdo (current motor position 0x6063 pg 114)
+#disable pdo (pg 34)
+wsdo#f,1800,0,1,0
+#event (every sync)
+wsdo#f,1800,2,1,1
+# map (pg 35)
+# disable pdo
+wsdo#f,1a00,0,1,0 
+#map
+wsdo#f,1a00,1,4,60630020
+#enable
+wsdo#f,1a00,0,1,1
+#enable pso
+wsdo#f,1800,1,4,0000018f
+
+
+
+
+
+#set heartbeat
+wsdo#f,1017,0,2,3e8
+
+
+####
+./TestMasterMicroMod -l ../../drivers/can_socket/libcanfestival_can_socket.so -m can0 -M 1M
+./TestMasterSlave -l ../../drivers/can_socket/libcanfestival_can_socket.so -m can0 -M 1M
+
+

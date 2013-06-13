@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+
+<launch>
+    <group ns="arm">
+        <node pkg="dofsliders" type="dofsliders" name="$(anon arm_sliders)" output="screen"/>
+    </group>
+</launch>
+

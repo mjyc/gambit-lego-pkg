@@ -1,0 +1,15 @@
+<package>
+  <description brief="dofsliders">
+    DOFSliders is a GUI tool for manually controlling various functions of a robot arm.
+  </description>
+  <author>Brian Mayton</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://https://dev.bdm.cc/projects/gambit/wiki/dofsliders</url>
+  <depend package="rospy"/>
+  <depend package="gambit_driver"/>
+  <depend package="gambit_msgs"/>
+
+</package>
+
+
