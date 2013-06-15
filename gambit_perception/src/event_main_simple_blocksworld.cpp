@@ -144,7 +144,7 @@ public:
     }
 
 };
-const std::string EventMainNodeTest::default_params_path_ = "/home/mjyc/Projects/HIL/codes/ros/stacks/ros-pkg-nsl/trunk/gambit_perception/params/";
+const std::string EventMainNodeTest::default_params_path_ = "/home/mjyc/ros/gambit-lego-pkg/gambit_perception/params/";
 
 
 int main(int argc, char **argv)

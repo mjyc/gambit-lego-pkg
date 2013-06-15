@@ -36,7 +36,7 @@ public:
         cv::waitKey(1);
     }
 };
-std::string CaptureNode::default_params_path_ = "/home/mjyc/Projects/HIL/codes/ros/stacks/ros-pkg-nsl/trunk/gambit_perception/images/";
+std::string CaptureNode::default_params_path_ = "/home/mjyc/ros/gambit-lego-pkg/gambit_perception/images/";
 
 
 int main(int argc, char **argv)

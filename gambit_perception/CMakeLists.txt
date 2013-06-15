@@ -38,19 +38,16 @@ set(CMAKE_CXX_FLAGS "-g -Wall")
 
 rosbuild_add_boost_directories()
 
-# Builing nodelets
-#rosbuild_add_library(gambit_perception src/convert_pointcloud_imgdep_nodelet.cpp)
-
 # Building other executables
 # Tools
-#rosbuild_add_executable(interactive_mask src/interactive_mask.cpp)
-#rosbuild_link_boost(interactive_mask signals system)
-#rosbuild_add_executable(learn_basetable src/learn_basetable.cpp)
-#rosbuild_link_boost(learn_basetable signals system)
-#rosbuild_add_executable(interactive_area src/interactive_area.cpp)
-#rosbuild_link_boost(interactive_area signals filesystem system)
-#rosbuild_add_executable(capture_iamges src/capture_images.cpp)
-#rosbuild_link_boost(capture_iamges signals filesystem system)
+# rosbuild_add_executable(interactive_mask src/interactive_mask.cpp)
+# rosbuild_link_boost(interactive_mask signals system)
+# rosbuild_add_executable(learn_basetable src/learn_basetable.cpp)
+# rosbuild_link_boost(learn_basetable signals system)
+# rosbuild_add_executable(interactive_area src/interactive_area.cpp)
+# rosbuild_link_boost(interactive_area signals filesystem system)
+# rosbuild_add_executable(capture_iamges src/capture_images.cpp)
+# rosbuild_link_boost(capture_iamges signals filesystem system)
 
 # Tests
 #rosbuild_add_executable(cv_utils_test src/cv_utils_test.cpp)
