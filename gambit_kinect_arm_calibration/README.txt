@@ -6,13 +6,11 @@ HOW TO:
   TERMINAL2
     openni_online
 
-  * Quick & Dirty: for gambit in Dieter's lab, try below command:
-  rosrun tf static_transform_publisher 0 0 0 0 -1.57079632679 -3.14159265359 /gripper_left /gripper_link 100
-
 2. Fine tune the found transformation with visualizer (repeat couple times to get good transformation)
 
 3. rviz visualization for monitoring calibration process
   rosrun rviz rviz -d rvizconf/gambit_kinect_arm_calibration.vcg
+
 
 ***** For all REMOTE MACHINES, set the MASTER_URI correctly.
   export ROS_MASTER_URI=http://chess-armbox.dyn.cs.washington.edu:11311

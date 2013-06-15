@@ -12,3 +12,5 @@ msg/
 srv/
 __init__.py
 *.user
+
+*.pyc
