@@ -116,7 +116,7 @@ bool ArmIF::is_joint_at(armlib::js_vect desired_pos, armlib::js_vect tolerances)
         float difference = desired_pos[i] - pos[i];
         while (difference < -1*M_PI) difference += 2*M_PI;
         while (difference > M_PI) difference -= 2*M_PI;
-        if (abs(difference) > tolerances[i])
+        if (fabs(difference) > tolerances[i])
             check = false;
     }
     return check;
@@ -251,7 +251,7 @@ ManipArmIF::ManipArmIF(ros::NodeHandle nh, SpeedParams spdParams)
     // TODO - make them ros parameters
     gripper_length_ = 0.07;
     move_height_ = 0.2;
-    object_height_ = 0.09;
+    object_height_ = 0.09; // ICRA2013 drop-off height
 
     spdParams_.gotoXSpeed = ArmIF::speed_range_check(spdParams_.gotoXSpeed);
     spdParams_.windingSpeed = ArmIF::speed_range_check(spdParams_.windingSpeed);
@@ -442,7 +442,7 @@ bool ManipArmIF::go_from_offview_to_manip() {
 // 6: move gripper into ground
 // 7: user stopped motion
 // 8: other unknown error
-int ManipArmIF::go_to_ikpose(tf::Pose gripper_pose, double vel)  {
+int ManipArmIF::go_to_ikpose(tf::Pose gripper_pose, double vel) {
 
     tf::Vector3 coords = gripper_pose.getOrigin();
     if (coords[2] < gripper_length_) {
@@ -492,15 +492,18 @@ int ManipArmIF::go_to_ikpose(tf::Pose gripper_pose, double vel)  {
     robot_->get_actual_joint_pos(current_pos);
     pos.push_back(current_pos[6]); // don't change the gripper
 
-    if (go_to_pose(pos,vel) == 2)
-        return 6; // ERRORCODE 6 - user stopped motion
+    if (go_to_pose(pos,vel) == 2) {
+        ROS_WARN("[ManipArmIF] User stopped the motion");
+        return 7; // ERRORCODE 7 - user stopped motion
+    }
 
     return 0;  // ERRORCODE 0 - all's well
 }
 
 int ManipArmIF::go_to_ikpose( \
         double rollangle, double pitchangle, double yawangle, \
-        tf::Vector3 coords, double vel)  {
+        tf::Vector3 coords, double vel)
+{
     tf::Quaternion q; q.setRPY(rollangle,pitchangle,yawangle);
     tf::Pose pose(q, coords);
     return go_to_ikpose(pose,vel);
@@ -529,7 +532,7 @@ int ManipArmIF::ppStop(double yawangle, tf::Vector3 coords) {
     if (!(((coords[0] == coords[1]) == coords[2]) == 0))
         if (go_to_ikpose(yawangle,coords,spdParams_.gotoXSpeed) != 0) {
             retval = 1;
-            ROS_WARN("[ManipArmIF] failed to reach prev_pose, moving to manip_pos after 1.0");
+            ROS_WARN("[ManipArmIF] failed to reach prev_pose, moving to manip_pos after 1.0 sec");
             sleep(1);
         }
     go_to_pose(manip_pos_,spdParams_.gotoXSpeed);
@@ -542,9 +545,36 @@ int ManipArmIF::ppStop(double yawangle, tf::Vector3 coords) {
 //
 // 0: everything is good
 // 1: grasping failed
-// 2: going above object failed
-// 3: getting close to obejct float64failed
 // 8: unknown error
+// 9: invalid starting position
+int ManipArmIF::manip_pos_grasp(double yawangle) {
+    // starting position check attempt
+    if (!is_joint_at(manip_pos_, one_degree_tolerances_)) {
+        ROS_ERROR("[ManipArmIF] joints are not in ""manip"" position.");
+        return 9;
+    }
+
+    // manip_pos should be at "open" gripper
+    ROS_INFO("Closing gripper");
+    close_gripper();
+
+    if (!is_gripper_fully_closed()) {   // Success
+        ROS_INFO("Grasping success!");
+        return 0;
+    } else {                            // Failed
+        ROS_INFO("Grasping failed...");
+        return 1;
+    }
+}
+
+// return error codes:
+//
+// 0: everything is good
+// 1: grasping failed
+// 2: going above object failed
+// 3: getting close to obejct failed
+// 8: unknown error
+// 9: invalid starting pose
 //
 // finish positions
 //   grasping sucess - above object
@@ -554,7 +584,7 @@ int ManipArmIF::pick_up_object(double yawangle, tf::Vector3 coords) {
     // starting position check attempt
     if (!is_joint_at(manip_pos_, one_degree_tolerances_)) {
         ROS_ERROR("[ManipArmIF] joints are not in ""manip"" position.");
-        return false;
+        return 9;
     }
 
     // Move gripper above the target object
@@ -663,7 +693,7 @@ int ManipArmIF::move_object(double src_yangle, tf::Vector3 src_coords, double tg
     int retval2 = put_down_object(tgt_yangle, tgt_coords);
     if (retval2 != 0) {
         ROS_ERROR("[ManipArmIF] UNKNOWN ERROR");
-        return retval;
+        return retval2;
     } else if (retval2 != 0) {
         ROS_ERROR("Put down failed");
         return 3;
@@ -690,6 +720,52 @@ int ManipArmIF::move_object_to_offtable(double src_yangle, tf::Vector3 src_coord
     return move_object(src_yangle,src_coords,tgt_angle,tgt_coords);
 }
 
+// return error codes:
+//
+// 0: everything is good
+//
+// 2: manip position graspong phase failed
+// 3: put down phase failed
+// 8: unknown error
+int ManipArmIF::grasp_n_put_object(double tgt_yangle, tf::Vector3 tgt_coords) {
+    double src_yangle = M_PI;
+    int retval = manip_pos_grasp(src_yangle);
+    // ignores grasping fail - assumes no grasping failure
+    if (retval == 8 || retval == 9) {
+        ROS_ERROR("[ManipArmIF] Manip position grasping failed");
+        return retval;
+    }
+
+    int retval2 = put_down_object(tgt_yangle, tgt_coords);
+    if (retval2 != 0) {
+        ROS_ERROR("[ManipArmIF] UNKNOWN ERROR");
+        return retval2;
+    } else if (retval2 != 0) {
+        ROS_ERROR("Put down failed");
+        return 3;
+    }
+
+    return 0;
+}
+
+int ManipArmIF::grasp_n_put_object_fast(double tgt_yangle, tf::Vector3 tgt_coords) {
+    ROS_WARN("NO INVALID STARING POSITION CHECK!");
+
+    ROS_INFO("Closing gripper");
+    close_gripper();
+
+    int retval2 = put_down_object(tgt_yangle, tgt_coords);
+    if (retval2 != 0) {
+        ROS_ERROR("[ManipArmIF] UNKNOWN ERROR");
+        return retval2;
+    } else if (retval2 != 0) {
+        ROS_ERROR("Put down failed");
+        return 3;
+    }
+
+    return 0;
+}
+
 
 // return error codes:
 
@@ -701,7 +777,8 @@ int ManipArmIF::move_object_to_offtable(double src_yangle, tf::Vector3 src_coord
 
 // finish positions - manip_pos
 int ManipArmIF::push_object(double src_yangle, tf::Vector3 src_coords, \
-                double tgt_yangle, tf::Vector3 tgt_coords) {
+                double tgt_yangle, tf::Vector3 tgt_coords) 
+{
 
     // Set gripper angle
     armlib::js_vect pos;
@@ -914,8 +991,10 @@ bool BasicManipStateMachine::manip_object_simple_srv( \
     ROS_INFO("Calling manipObject()");
     resp.retval = manipObject(req.yawangle,coords,req.type);
     ROS_DEBUG_STREAM("manipObject resp.retval = " << resp.retval);
-    ROS_INFO("Calling moveToOffView()");
-    moveToOffView();
+    if (req.offview) { // end at offview pose
+        ROS_INFO("Calling moveToOffView()");
+        moveToOffView();
+    }
     return (true);
 }
 
@@ -986,6 +1065,13 @@ int ManipReadyState::manipObject(double yawangle, tf::Vector3 coords, int type) 
         break;
     case 5:
         retval = machine_->push_object_down(coords);
+        break;
+
+    case 6:
+        retval = machine_->grasp_n_put_object(yawangle, coords);
+        break;
+    case 7:
+        retval = machine_->grasp_n_put_object_fast(yawangle, coords);
         break;
 
     default:

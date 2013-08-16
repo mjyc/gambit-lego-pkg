@@ -58,8 +58,10 @@ int main(int argc, char** argv) {
     params.gotoXSpeed = 0.3;
     params.windingSpeed = 1.3;
     params.windingSpeed2 = 0.7;
-    params.hoverSpeed = 0.4;
-    params.manipSpeed = 0.2;
+    // params.hoverSpeed = 0.45;
+    // params.manipSpeed = 0.2;
+    params.hoverSpeed = 0.75;
+    params.manipSpeed = 0.55;
     params.offviewSpeed = 0.7;
     boost::shared_ptr<BasicManipStateMachine> manipStateMachine = boost::make_shared<BasicManipStateMachine> (nh,params,posID);
     SimpleUI simpleUI(manipStateMachine.get());

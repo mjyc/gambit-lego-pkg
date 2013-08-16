@@ -28,8 +28,9 @@ public:
     static const double max_speed_ = 1.5;
     static const double min_speed_ = 0.1;
     static const int num_joints_ = 7;
-    static const double closed_gripper_angle_ = -1.045;  //max close is ~ -1.047 == -60 degrees
-    static const double open_gripper_angle_ = 0.785;     //max open is ~0.785 == 45 degrees
+    static const double closed_gripper_angle_ = -1.045;   //max close is  -1.047 == -60 degrees
+    //static const double open_gripper_angle_ = 0.785;    //max open is    0.785 == 45 degrees
+    static const double open_gripper_angle_ = -0.131;     //half open is  -0.131 == -7.5 degrees
 
     static armlib::js_vect make_pos_vector (float, float, float, float, float, float, float);
     static double speed_range_check(double speed);
@@ -59,16 +60,13 @@ public:
 }; // end class
 
 
-
-
-
 struct SpeedParams {
-    double gotoXSpeed;     // any unsafe goto
-    double windingSpeed;   // back  <-> front
-    double windingSpeed2;  // front <-> manip
-    double hoverSpeed;     // move above object
-    double manipSpeed;     //
-    double offviewSpeed;    //
+    double gotoXSpeed;      // any unsafe goto
+    double windingSpeed;    // back  <-> front
+    double windingSpeed2;   // front <-> manip
+    double hoverSpeed;      // move above object
+    double manipSpeed;      // go down to object / come up from object
+    double offviewSpeed;    // manip <-> offview
 };
 
 
@@ -119,10 +117,14 @@ public:
     int pick_up_object(double yawangle, tf::Vector3 coords);
     int put_down_object(double yawangle, tf::Vector3 coords);
     int move_object(double src_yangle, tf::Vector3 src_coords, double tgt_yangle, tf::Vector3 tgt_coords);
+    int manip_pos_grasp(double yawangle);
     // NOTE - ICRA2013 specific
     int move_object_to_left(double src_yangle, tf::Vector3 src_coords);
     int move_object_to_right(double src_yangle, tf::Vector3 src_coords);
     int move_object_to_offtable(double src_yangle, tf::Vector3 src_coords);
+    // NOTE - HRI2014 specific
+    int grasp_n_put_object(double tgt_yangle, tf::Vector3 tgt_coords);
+    int grasp_n_put_object_fast(double tgt_yangle, tf::Vector3 tgt_coords);
 
     // push
     int push_object(double src_yangle, tf::Vector3 src_coords, \
@@ -138,7 +140,7 @@ armlib::js_vect ManipArmIF::front_pos_ = ArmIF::make_pos_vector( 1.0722, -3.10, 
 armlib::js_vect ManipArmIF::manip_pos_ = ArmIF::make_pos_vector( 0.2443,  0.90, 2.2024,  0.0,    -0.0376, 0.2446, ArmIF::open_gripper_angle_);
 armlib::js_vect ManipArmIF::offview_pos_ = ArmIF::make_pos_vector( -1.2443,  0.90, 2.2024,  0.0,    -0.0376, 0.2446, ArmIF::open_gripper_angle_);
 
-armlib::js_vect ManipArmIF::one_degree_tolerances_ = ManipArmIF::make_pos_vector(0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925, ManipArmIF::open_gripper_angle_);
+armlib::js_vect ManipArmIF::one_degree_tolerances_ = ManipArmIF::make_pos_vector(0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925);
 
 
 

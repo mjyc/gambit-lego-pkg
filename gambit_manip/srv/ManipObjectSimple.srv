@@ -3,6 +3,7 @@ float64 from_x
 float64 from_y
 float64 from_z
 uint32 type
+bool offview
 
 uint32 PLACE_LEFT = 0
 uint32 PLACE_RIGHT = 1
@@ -10,5 +11,6 @@ uint32 PLACE_OFFTABLE = 2
 uint32 PUSH_RIGHT = 3
 uint32 PUSH_LEFT = 4
 uint32 PUSH_OFFTABLE = 5
+uint32 FAST_PLACE = 6
 ---
 uint32 retval
