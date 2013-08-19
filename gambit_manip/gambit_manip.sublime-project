@@ -1,0 +1,11 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "/home/mjyc/ros-repos/gambit-lego-pkg/gambit_manip",
+			"folder_exclude_patterns": ["backupfiles","bin","build","lib","msg_gen","srv_gen","src/gambit_manip"],
+			"file_exclude_patterns": ["*.sublime-project","*.sublime-workspace","*.user"]
+		}
+	]
+}
