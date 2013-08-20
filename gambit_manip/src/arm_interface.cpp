@@ -41,8 +41,8 @@ ArmIF::ArmIF (ros::NodeHandle nh)
       robot_(boost::make_shared<armlib::Gambit>()),
       gripper_closed_(false)
 {
-    nh_global_.param<double>("speed", speed_, 0.5);              // default speed_ = 0.5
     nh_global_.param<std::string>("arm_ref", arm_ref_, "arm0");  // default arm_ref_ = "arm0"
+    nh_global_.param<double>("speed", speed_, 0.5);              // default speed_ = 0.5
     speed_ = ArmIF::speed_range_check(speed_);
 }
 
@@ -244,20 +244,38 @@ void ArmIF::go_to_zero() {
 
 
 
-ManipArmIF::ManipArmIF(ros::NodeHandle nh, SpeedParams spdParams)
-    : ArmIF(nh),
-      spdParams_(spdParams)
+ManipArmIF::ManipArmIF(ros::NodeHandle nh)
+    : ArmIF(nh)
 {
-    // TODO - make them ros parameters
-    gripper_length_ = 0.07;
-    move_height_ = 0.2;
-    object_height_ = 0.09; // ICRA2013 drop-off height
+
+    nh_global_.param<double>("gripper_length", gripper_length_, 0.07);
+    nh_global_.param<double>("move_height", move_height_, 0.2);
+    nh_global_.param<double>("object_height", object_height_, 0.09);    // ICRA2013 drop-off height
+
+    nh_global_.param<double>("gotoXSpeed", spdParams_.gotoXSpeed, 0.3);
+    nh_global_.param<double>("windingSpeed", spdParams_.windingSpeed, 1.3);
+    nh_global_.param<double>("windingSpeed2", spdParams_.windingSpeed2, 0.7);
+    nh_global_.param<double>("hoverSpeed", spdParams_.hoverSpeed, 0.45);
+    nh_global_.param<double>("manipSpeed", spdParams_.manipSpeed, 0.2);   // 0.55
+    nh_global_.param<double>("offviewSpeed", spdParams_.offviewSpeed, 0.7);
 
     spdParams_.gotoXSpeed = ArmIF::speed_range_check(spdParams_.gotoXSpeed);
     spdParams_.windingSpeed = ArmIF::speed_range_check(spdParams_.windingSpeed);
     spdParams_.windingSpeed2 = ArmIF::speed_range_check(spdParams_.windingSpeed2);
     spdParams_.hoverSpeed = ArmIF::speed_range_check(spdParams_.hoverSpeed);
     spdParams_.manipSpeed = ArmIF::speed_range_check(spdParams_.manipSpeed);
+    spdParams_.offviewSpeed = ArmIF::speed_range_check(spdParams_.offviewSpeed);
+
+    // TODO - make them ros parameters
+//    gripper_length_ = 0.07;
+//    move_height_ = 0.2;
+//    object_height_ = 0.09; // ICRA2013 drop-off height
+
+//    spdParams_.gotoXSpeed = ArmIF::speed_range_check(spdParams_.gotoXSpeed);
+//    spdParams_.windingSpeed = ArmIF::speed_range_check(spdParams_.windingSpeed);
+//    spdParams_.windingSpeed2 = ArmIF::speed_range_check(spdParams_.windingSpeed2);
+//    spdParams_.hoverSpeed = ArmIF::speed_range_check(spdParams_.hoverSpeed);
+//    spdParams_.manipSpeed = ArmIF::speed_range_check(spdParams_.manipSpeed);
 }
 
 ManipArmIF::~ManipArmIF()
@@ -864,8 +882,8 @@ int ManipArmIF::push_object_down(tf::Vector3 coords) {
 }
 
 
-BasicManipStateMachine::BasicManipStateMachine(ros::NodeHandle nh, SpeedParams spdParams, char startPosID)
-    : ManipArmIF(nh, spdParams)
+BasicManipStateMachine::BasicManipStateMachine(ros::NodeHandle nh, char startPosID)
+    : ManipArmIF(nh)
 {
     // Initialize states
     BackState_ = boost::shared_ptr<BackState>(new BackState(this));

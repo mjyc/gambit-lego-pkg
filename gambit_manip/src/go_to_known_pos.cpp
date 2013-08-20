@@ -28,7 +28,8 @@ int main (int argc, char** argv){
     params.gotoXSpeed = 0.5;
     params.windingSpeed = 1.5;
     params.windingSpeed2 = 1.0;
-    ManipArmIF aif(nh,params);
+    ManipArmIF aif(nh);
+    aif.setSpeed(params);
 
 	char posID = argv[1][0];
 	if (posID == 'b') {

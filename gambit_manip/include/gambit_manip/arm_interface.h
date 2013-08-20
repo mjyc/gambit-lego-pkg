@@ -28,9 +28,10 @@ public:
     static const double max_speed_ = 1.5;
     static const double min_speed_ = 0.1;
     static const int num_joints_ = 7;
-    static const double closed_gripper_angle_ = -1.045;   //max close is  -1.047 == -60 degrees
-    //static const double open_gripper_angle_ = 0.785;    //max open is    0.785 == 45 degrees
-    static const double open_gripper_angle_ = -0.131;     //half open is  -0.131 == -7.5 degrees
+    static const double closed_gripper_angle_ = -1.045;    // max close is  -1.047 == -60 degrees
+    // static const double open_gripper_angle_ = 0.785;     // max open is    0.785 == 45 degrees
+    // static const double open_gripper_angle_ = -0.131;    // half open is  -0.131 == -7.5 degrees
+    static const double open_gripper_angle_ = -0.5;    // HRI2014
 
     static armlib::js_vect make_pos_vector (float, float, float, float, float, float, float);
     static double speed_range_check(double speed);
@@ -88,8 +89,17 @@ public:
     // hardcoded tolerances
     static armlib::js_vect one_degree_tolerances_;
 
-    ManipArmIF(ros::NodeHandle nh, SpeedParams spdParams);
+    ManipArmIF(ros::NodeHandle nh);
     virtual ~ManipArmIF();
+
+    void setSpeed(SpeedParams spdParams) {
+        spdParams_.gotoXSpeed = ArmIF::speed_range_check(spdParams.gotoXSpeed);
+        spdParams_.windingSpeed = ArmIF::speed_range_check(spdParams.windingSpeed);
+        spdParams_.windingSpeed2 = ArmIF::speed_range_check(spdParams.windingSpeed2);
+        spdParams_.hoverSpeed = ArmIF::speed_range_check(spdParams.hoverSpeed);
+        spdParams_.manipSpeed = ArmIF::speed_range_check(spdParams.manipSpeed);
+        spdParams_.offviewSpeed = ArmIF::speed_range_check(spdParams.offviewSpeed);
+    }
 
     // WARN - NO SAFETY CHECKS!
     void go_to_back();
@@ -140,7 +150,8 @@ armlib::js_vect ManipArmIF::front_pos_ = ArmIF::make_pos_vector( 1.0722, -3.10, 
 armlib::js_vect ManipArmIF::manip_pos_ = ArmIF::make_pos_vector( 0.2443,  0.90, 2.2024,  0.0,    -0.0376, 0.2446, ArmIF::open_gripper_angle_);
 armlib::js_vect ManipArmIF::offview_pos_ = ArmIF::make_pos_vector( -1.2443,  0.90, 2.2024,  0.0,    -0.0376, 0.2446, ArmIF::open_gripper_angle_);
 
-armlib::js_vect ManipArmIF::one_degree_tolerances_ = ManipArmIF::make_pos_vector(0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925);
+//armlib::js_vect ManipArmIF::one_degree_tolerances_ = ManipArmIF::make_pos_vector(0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925);
+armlib::js_vect ManipArmIF::one_degree_tolerances_ = ManipArmIF::make_pos_vector(0.03,0.03,0.03,0.03,0.03,0.03,0.03);
 
 
 
@@ -169,7 +180,7 @@ protected:
 
 
 public:
-    BasicManipStateMachine(ros::NodeHandle nh, SpeedParams spdParams, char startPosID);
+    BasicManipStateMachine(ros::NodeHandle nh, char startPosID);
 
     // State transition related
 

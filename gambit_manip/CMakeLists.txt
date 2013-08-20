@@ -39,8 +39,8 @@ rosbuild_add_executable(pickNplace_push_manip src/pickNplace_push_manip.cpp)
 target_link_libraries(pickNplace_push_manip arm_interface)
 
 # test executables
-rosbuild_add_executable(basic_movement_tests tests/basic_movement_tests.cpp)
-target_link_libraries(basic_movement_tests arm_interface)
+# rosbuild_add_executable(basic_movement_tests tests/basic_movement_tests.cpp)
+# target_link_libraries(basic_movement_tests arm_interface)
 #rosbuild_add_executable(user_stop_tests tests/user_stop_test.cpp)
 #target_link_libraries(user_stop_tests arm_interface)
 

@@ -12,7 +12,7 @@
   <depend package="armlib"/>
   <depend package="visualization_msgs"/>
   <depend package="tf"/>
-  <depend package="speakeasy"/>
+  <!-- depend package="speakeasy"/ -->
   <depend package="opencv2"/>
 
 </package>

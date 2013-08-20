@@ -69,33 +69,6 @@
 			]
 		]
 	},
-	"buffers":
-	[
-		{
-			"file": "src/arm_interface.cpp",
-			"settings":
-			{
-				"buffer_size": 34176,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/pickNplace_push_manip.cpp",
-			"settings":
-			{
-				"buffer_size": 2168,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "include/gambit_manip/arm_interface.h",
-			"settings":
-			{
-				"buffer_size": 10210,
-				"line_ending": "Unix"
-			}
-		}
-	],
 	"build_system": "",
 	"command_palette":
 	{
@@ -267,6 +240,11 @@
 	},
 	"file_history":
 	[
+		"/home/robotlab/ros-repos/gambit-lego-pkg/gambit_manip/src/go_to_known_pos.cpp",
+		"/home/robotlab/ros-repos/gambit-lego-pkg/gambit_manip/src/pickNplace_push_manip.cpp",
+		"/home/robotlab/ros-repos/gambit-lego-pkg/gambit_manip/include/gambit_manip/arm_interface.h",
+		"/home/robotlab/ros-repos/gambit-lego-pkg/gambit_manip/src/arm_interface.cpp",
+		"/home/robotlab/ros-repos/gambit-lego-pkg/gambit_manip/gambit_manip.sublime-project",
 		"/home/mjyc/Dropbox/repos-dropbox/clipart-exp/stanford-parser-full-2013-06-20/results/abstract_scene_test_output.txt",
 		"/home/mjyc/ros-repos/gambit-lego-pkg/gambit_manip/gridtest.py",
 		"/home/mjyc/ros-repos/gambit-lego-pkg/gambit_manip/srv/ManipObjectSimple.srv",
@@ -389,12 +367,7 @@
 		"/home/mjyc/data/abstract_scences/AbstractScenes_v1/Sentences_1002.txt",
 		"/home/mjyc/Dropbox/repos-dropbox/js-exp/voxelpainter_client/v3/voxelpainter (chess-laptop's conflicted copy 2013-07-24).html",
 		"/home/mjyc/Dropbox/repos-dropbox/js-exp/voxelpainter_client/v3/index (chess-laptop's conflicted copy 2013-07-24).html",
-		"/home/mjyc/Dropbox/linux-setups/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
-		"/home/mjyc/Dropbox/linux-setups/sublime-text-3/Packages/Default/Preferences.sublime-settings",
-		"/home/mjyc/Dropbox/repos-dropbox/js-exp/voxelpainter_client/v3/layout_test.html",
-		"/home/mjyc/Dropbox/repos-dropbox/js-exp/voxelpainter_server/v1/untitled.html",
-		"/home/mjyc/Dropbox/repos-dropbox/js-exp/voxelpainter_server/v2/public/stylesheets/style.styl",
-		"/home/mjyc/Dropbox/repos-dropbox/js-exp/voxelpainter_server/v2/views/index.jade"
+		"/home/mjyc/Dropbox/linux-setups/sublime-text-3/Packages/User/Default (Linux).sublime-keymap"
 	],
 	"find":
 	{
@@ -413,6 +386,19 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"zz",
+			"open_gripper_angle_",
+			"open_gripper_angle",
+			"params",
+			"(spdParams_",
+			"(spdParams_.",
+			"manip",
+			",amo[",
+			"open_gripper_angle_",
+			"param",
+			"spdParams_",
+			"= ",
+			"one_de",
 			"grasp_n_put_object_fast",
 			"::grasp_n_put_object_fast",
 			"::movegr",
@@ -527,20 +513,7 @@
 			"init",
 			"Name",
 			"Named",
-			"named",
-			"0",
-			"1",
-			"statusbar_str",
-			"ASSIGNMENT_MODEL_SET",
-			"true",
-			"CONSTRAINT_LEVEL",
-			"inst_media",
-			"inst_text",
-			"index",
-			"CONSTRAINT_LEVELS",
-			"CONSTRAINT_LEVEL",
-			"num_SCENE",
-			"hide"
+			"named"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -569,378 +542,6 @@
 		"whole_word": false,
 		"wrap": true
 	},
-	"groups":
-	[
-		{
-			"selected": 1,
-			"sheets":
-			[
-				{
-					"buffer": 0,
-					"file": "src/arm_interface.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 34176,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								22863,
-								22863
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"bs_sintax": "c++",
-							"buffer_scroll_name": "7b4282de",
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 10669.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "src/pickNplace_push_manip.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2168,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1883,
-								1828
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"bs_sintax": "c++",
-							"buffer_scroll_name": "4f26399c",
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 240.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 2,
-					"file": "include/gambit_manip/arm_interface.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10210,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4523,
-								4523
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"bs_sintax": "c++",
-							"buffer_scroll_name": "d0b4a127",
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1541.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		}
-	],
 	"incremental_find":
 	{
 		"height": 34.0
@@ -958,18 +559,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.529649595687,
 			1.0
 		],
 		"rows":
@@ -983,7 +577,6 @@
 	{
 		"height": 112.0
 	},
-	"project": "gambit_manip.sublime-project",
 	"replace":
 	{
 		"height": 94.0
@@ -994,6 +587,30 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"gotoknownpo",
+				"src/go_to_known_pos.cpp"
+			],
+			[
+				"gr",
+				"scripts/gridtest.py"
+			],
+			[
+				"arm",
+				"include/gambit_manip/arm_interface.h"
+			],
+			[
+				"arm_in",
+				"include/gambit_manip/arm_interface.h"
+			],
+			[
+				"pick",
+				"src/pickNplace_push_manip.cpp"
+			],
+			[
+				"gri",
+				"scripts/gridtest.py"
+			],
 			[
 				"pic",
 				"src/pickNplace_push_manip.cpp"
@@ -1011,20 +628,12 @@
 				"include/gambit_manip/arm_interface.h"
 			],
 			[
-				"pick",
-				"src/pickNplace_push_manip.cpp"
-			],
-			[
 				"arm_interface",
 				"include/gambit_manip/arm_interface.h"
 			],
 			[
 				"basic",
 				"backupfiles/src/basic_manip_node.cpp"
-			],
-			[
-				"arm_in",
-				"src/arm_interface.cpp"
 			],
 			[
 				"",
@@ -1091,7 +700,7 @@
 	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
+	"side_bar_visible": true,
 	"side_bar_width": 189.0,
 	"status_bar_visible": true,
 	"template_settings":
