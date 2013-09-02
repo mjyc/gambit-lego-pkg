@@ -12,6 +12,7 @@
  * Given seven joint positions, make a usable pose vector from them. Useful for
  * hardcoded positions like zero, move_pos or watch_pos.
  */
+
 armlib::js_vect ArmIF::make_pos_vector (float i, float j, float k, float l, float m, float n, float o) {
     ROS_DEBUG("Call: make_pos_vector");
     armlib::js_vect pos;
@@ -188,6 +189,7 @@ void ArmIF::open_gripper() {
     // set the gripper value, leave everything else unchanged
     robot_->get_actual_joint_pos(pos);
     pos[6] = open_gripper_angle_; //max open is ~0.785 == 45 degrees
+
     gripper_closed_ = false;
     go_to_pose(pos);
     return;
@@ -226,7 +228,7 @@ bool ArmIF::is_gripper_set_to_closed() {
 
 /**
  * Point at the sky
- * NO SAFTY CHECK!
+ * NO SAFETY CHECK!
  */
 void ArmIF::go_to_zero() {
     armlib::js_vect wait_pos;
@@ -239,7 +241,6 @@ void ArmIF::go_to_zero() {
     go_to_pose(wait_pos);
     return;
 }
-
 
 
 
@@ -259,6 +260,33 @@ ManipArmIF::ManipArmIF(ros::NodeHandle nh)
     nh_global_.param<double>("manipSpeed", spdParams_.manipSpeed, 0.2);   // 0.55
     nh_global_.param<double>("offviewSpeed", spdParams_.offviewSpeed, 0.7);
 
+    // a rosparam defines how wide the gripper opens
+    std::string opening;
+    if (nh.getParam("gripper_opening", opening))
+    {
+        closed_gripper_angle_ = -1.045;    // max close is  -1.047 == -60 degrees
+
+        if (opening == "max") {
+            open_gripper_angle_ = 0.785;    // max open is    0.785 == 45 degrees
+        } else if (opening == "half") {
+            open_gripper_angle_ = -0.131;   // half open is  -0.131 == -7.5 degrees
+        } else if (opening == "lego") {
+            open_gripper_angle_ = 0.5;      // mjyc's ideal opening for blue grippers, HRI/ICRA 2014 submission
+        } else {
+            ROS_ERROR_STREAM("Unknown ROS param \"gripper_opening\": " << opening);
+            assert(false);
+        }
+    } else { // parameter not set
+        ROS_ERROR_STREAM("Set ROS param \"gripper_opening\" to \"max\", \"half\", or \"lego\"");
+        assert(false);
+    }
+
+    // WARN - gripper is always open
+    back_pos_  = ArmIF::make_pos_vector(-3.1260, -3.10, 3.08,   -1.5391, -0.1772, 0.0460, ArmIF::open_gripper_angle_);
+    front_pos_ = ArmIF::make_pos_vector( 1.0722, -3.10, 3.08,   -1.4521,  0.0,    0.0460, ArmIF::open_gripper_angle_);
+    manip_pos_ = ArmIF::make_pos_vector( 0.2443,  0.90, 2.2024,  0.0,    -0.0376, 0.2446, ArmIF::open_gripper_angle_);
+    offview_pos_ = ArmIF::make_pos_vector( -1.2443,  0.90, 2.2024,  0.0,    -0.0376, 0.2446, ArmIF::open_gripper_angle_);
+
     spdParams_.gotoXSpeed = ArmIF::speed_range_check(spdParams_.gotoXSpeed);
     spdParams_.windingSpeed = ArmIF::speed_range_check(spdParams_.windingSpeed);
     spdParams_.windingSpeed2 = ArmIF::speed_range_check(spdParams_.windingSpeed2);
@@ -266,16 +294,19 @@ ManipArmIF::ManipArmIF(ros::NodeHandle nh)
     spdParams_.manipSpeed = ArmIF::speed_range_check(spdParams_.manipSpeed);
     spdParams_.offviewSpeed = ArmIF::speed_range_check(spdParams_.offviewSpeed);
 
-    // TODO - make them ros parameters
-//    gripper_length_ = 0.07;
-//    move_height_ = 0.2;
-//    object_height_ = 0.09; // ICRA2013 drop-off height
+    //armlib::js_vect ManipArmIF::one_degree_tolerances_ =                    ManipArmIF::make_pos_vector(0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925);
+    one_degree_tolerances_ = ManipArmIF::make_pos_vector(0.03,0.03,0.03,0.03,0.03,0.03,0.03);
 
-//    spdParams_.gotoXSpeed = ArmIF::speed_range_check(spdParams_.gotoXSpeed);
-//    spdParams_.windingSpeed = ArmIF::speed_range_check(spdParams_.windingSpeed);
-//    spdParams_.windingSpeed2 = ArmIF::speed_range_check(spdParams_.windingSpeed2);
-//    spdParams_.hoverSpeed = ArmIF::speed_range_check(spdParams_.hoverSpeed);
-//    spdParams_.manipSpeed = ArmIF::speed_range_check(spdParams_.manipSpeed);
+    // TODO - make them ros parameters
+    //    gripper_length_ = 0.07;
+    //    move_height_ = 0.2;
+    //    object_height_ = 0.09; // ICRA2013 drop-off height
+
+    //    spdParams_.gotoXSpeed = ArmIF::speed_range_check(spdParams_.gotoXSpeed);
+    //    spdParams_.windingSpeed = ArmIF::speed_range_check(spdParams_.windingSpeed);
+    //    spdParams_.windingSpeed2 = ArmIF::speed_range_check(spdParams_.windingSpeed2);
+    //    spdParams_.hoverSpeed = ArmIF::speed_range_check(spdParams_.hoverSpeed);
+    //    spdParams_.manipSpeed = ArmIF::speed_range_check(spdParams_.manipSpeed);
 }
 
 ManipArmIF::~ManipArmIF()
@@ -403,16 +434,16 @@ bool ManipArmIF::go_from_manip_to_front() {
     }
 
     gripper_closed_ = false; //since front_pos opens the gripper
-//    armlib::dir_vect dir;
-//    dir.push_back(armlib::R_POSITIVE);
-//    dir.push_back(armlib::R_NEGATIVE);
-//    dir.push_back(armlib::R_POSITIVE);
-//    dir.push_back(armlib::R_SHORTEST);
-//    dir.push_back(armlib::R_SHORTEST);
-//    dir.push_back(armlib::R_SHORTEST);
-//    dir.push_back(armlib::R_SHORTEST);
-//    robot_->go_to(front_pos_, dir, spdParams_.windingSpeed2);
-//    robot_->wait_until_stopped();
+    //    armlib::dir_vect dir;
+    //    dir.push_back(armlib::R_POSITIVE);
+    //    dir.push_back(armlib::R_NEGATIVE);
+    //    dir.push_back(armlib::R_POSITIVE);
+    //    dir.push_back(armlib::R_SHORTEST);
+    //    dir.push_back(armlib::R_SHORTEST);
+    //    dir.push_back(armlib::R_SHORTEST);
+    //    dir.push_back(armlib::R_SHORTEST);
+    //    robot_->go_to(front_pos_, dir, spdParams_.windingSpeed2);
+    //    robot_->wait_until_stopped();
 
     if (go_to_pose(front_pos_, spdParams_.windingSpeed2) != 0)
         return 0;
@@ -631,7 +662,7 @@ int ManipArmIF::pick_up_object(double yawangle, tf::Vector3 coords) {
     ROS_INFO("Closing gripper");
     close_gripper();
     if (!is_gripper_fully_closed()) {   // Success
-    //if (true) {   // DEBUG
+        //if (true) {   // DEBUG
         ROS_INFO("Grasping success!");
         if (go_to_ikpose(yawangle, above_coords, spdParams_.manipSpeed) != 0) {
             ROS_ERROR("[ManipArmIF] Failed to go back to above object - object in gripper");
@@ -795,7 +826,7 @@ int ManipArmIF::grasp_n_put_object_fast(double tgt_yangle, tf::Vector3 tgt_coord
 
 // finish positions - manip_pos
 int ManipArmIF::push_object(double src_yangle, tf::Vector3 src_coords, \
-                double tgt_yangle, tf::Vector3 tgt_coords) 
+                            double tgt_yangle, tf::Vector3 tgt_coords)
 {
 
     // Set gripper angle
@@ -1066,6 +1097,7 @@ int ManipReadyState::manipObject(double yawangle, tf::Vector3 coords, int type) 
     int retval = -1;
     switch (type) {
     case 0:
+        // left, right, and offtable are stored and fixed; coords are pickup location
         retval = machine_->move_object_to_left(yawangle, coords);
         break;
     case 1:
@@ -1074,8 +1106,8 @@ int ManipReadyState::manipObject(double yawangle, tf::Vector3 coords, int type) 
     case 2:
         retval = machine_->move_object_to_offtable(yawangle, coords);
         break;
-
     case 3:
+        // push to a fixed pos instead of lifting to same
         retval = machine_->push_object_left(coords);
         break;
     case 4:
@@ -1084,11 +1116,12 @@ int ManipReadyState::manipObject(double yawangle, tf::Vector3 coords, int type) 
     case 5:
         retval = machine_->push_object_down(coords);
         break;
-
     case 6:
+        // pickup location(s) are fixed, coordinates are for target location
         retval = machine_->grasp_n_put_object(yawangle, coords);
         break;
     case 7:
+        // less sanity checking; won't always go back to initial position, for example
         retval = machine_->grasp_n_put_object_fast(yawangle, coords);
         break;
 

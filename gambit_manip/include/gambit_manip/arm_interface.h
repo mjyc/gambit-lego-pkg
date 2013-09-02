@@ -28,10 +28,17 @@ public:
     static const double max_speed_ = 1.5;
     static const double min_speed_ = 0.1;
     static const int num_joints_ = 7;
-    static const double closed_gripper_angle_ = -1.045;    // max close is  -1.047 == -60 degrees
-    // static const double open_gripper_angle_ = 0.785;     // max open is    0.785 == 45 degrees
-    // static const double open_gripper_angle_ = -0.131;    // half open is  -0.131 == -7.5 degrees
-    static const double open_gripper_angle_ = -0.5;    // HRI2014
+
+    //    // How much to open and close the gripper; depends on application.  Leave these for now, we may
+    //    // want to come back to doing it statically.
+    //    static const double closed_gripper_angle_ = -1.045;    // max close is  -1.047 == -60 degrees
+    //    static const double open_gripper_angle_ = -0.5;        // mjyc's ideal opening for blue grippers, HRI/ICRA 2014 submission
+    //    // static const double open_gripper_angle_ = 0.785;      // max open is    0.785 == 45 degrees
+    //    // static const double open_gripper_angle_ = -0.131;     // half open is  -0.131 == -7.5 degrees
+
+    // How much to open and close the gripper; depends on application
+    double closed_gripper_angle_;    // max close is  -1.047 == -60 degrees
+    double open_gripper_angle_;    // mjyc's ideal opening for blue grippers, HRI/ICRA 2014 submission
 
     static armlib::js_vect make_pos_vector (float, float, float, float, float, float, float);
     static double speed_range_check(double speed);
@@ -82,12 +89,12 @@ protected:
 
 public:
     // hardcoded joint poses
-    static armlib::js_vect back_pos_;
-    static armlib::js_vect front_pos_;
-    static armlib::js_vect manip_pos_;
-    static armlib::js_vect offview_pos_;
+    armlib::js_vect back_pos_;
+    armlib::js_vect front_pos_;
+    armlib::js_vect manip_pos_;
+    armlib::js_vect offview_pos_;
     // hardcoded tolerances
-    static armlib::js_vect one_degree_tolerances_;
+    armlib::js_vect one_degree_tolerances_;
 
     ManipArmIF(ros::NodeHandle nh);
     virtual ~ManipArmIF();
@@ -144,18 +151,6 @@ public:
     int push_object_down(tf::Vector3 coords);
 
 };
-// WARN - gripper is always open
-armlib::js_vect ManipArmIF::back_pos_  = ArmIF::make_pos_vector(-3.1260, -3.10, 3.08,   -1.5391, -0.1772, 0.0460, ArmIF::open_gripper_angle_);
-armlib::js_vect ManipArmIF::front_pos_ = ArmIF::make_pos_vector( 1.0722, -3.10, 3.08,   -1.4521,  0.0,    0.0460, ArmIF::open_gripper_angle_);
-armlib::js_vect ManipArmIF::manip_pos_ = ArmIF::make_pos_vector( 0.2443,  0.90, 2.2024,  0.0,    -0.0376, 0.2446, ArmIF::open_gripper_angle_);
-armlib::js_vect ManipArmIF::offview_pos_ = ArmIF::make_pos_vector( -1.2443,  0.90, 2.2024,  0.0,    -0.0376, 0.2446, ArmIF::open_gripper_angle_);
-
-//armlib::js_vect ManipArmIF::one_degree_tolerances_ = ManipArmIF::make_pos_vector(0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925);
-armlib::js_vect ManipArmIF::one_degree_tolerances_ = ManipArmIF::make_pos_vector(0.03,0.03,0.03,0.03,0.03,0.03,0.03);
-
-
-
-
 
 #include <boost/noncopyable.hpp>
 #include "gambit_manip/BasicMovements.h"
