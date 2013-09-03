@@ -277,7 +277,7 @@ ManipArmIF::ManipArmIF(ros::NodeHandle nh)
             assert(false);
         }
     } else { // parameter not set
-        ROS_ERROR_STREAM("Set ROS param \"gripper_opening\" to \"max\", \"half\", or \"lego\"");
+        ROS_ERROR_STREAM("Set ROS param \"gripper_opening\" to \"max\", \"half\", or \"lego\" (or use aliases)");
         assert(false);
     }
 
@@ -592,7 +592,7 @@ int ManipArmIF::ppStop(double yawangle, tf::Vector3 coords) {
 }
 
 
-// return error codes:
+// return error odes:
 //
 // 0: everything is good
 // 1: grasping failed
@@ -658,7 +658,7 @@ int ManipArmIF::pick_up_object(double yawangle, tf::Vector3 coords) {
     if (retval2 != 0) {
         ROS_ERROR("[ManipArmIF] Can't go to object");
         ppStop(yawangle, above_coords);
-        return 3; // ERRORCODE: getting close to obejct failed
+        return 3; // ERRORCODE: getting close to object failed
     }
 
     ROS_INFO("Closing gripper");
@@ -771,12 +771,29 @@ int ManipArmIF::move_object_to_offtable(double src_yangle, tf::Vector3 src_coord
     return move_object(src_yangle,src_coords,tgt_angle,tgt_coords);
 }
 
-int ManipArmIF::move_object_to_bin(double src_yangle, tf::Vector3 src_coords) {
-    double tgt_angle = M_PI;
-    tf::Vector3 tgt_coords(-0.2,-0.05,0.12);
-    return move_object(src_yangle,src_coords,tgt_angle,tgt_coords);
+int ManipArmIF::move_object_to_bin(double src_yawangle, tf::Vector3 src_coords) {
+    double tgt_angle = M_PI/2;
+    // specify a midpoint
+    tf::Vector3 pickup_coords = src_coords;
+    tf::Vector3 midpoint_coords(0.25, -0.15, 0.25);
+    tf::Vector3 dropoff_coords(-0.02, -0.2, 0.25);
+    // perform motion
+    pick_up_object(src_yawangle, pickup_coords);
+    go_to_ikpose(tgt_angle, midpoint_coords, 0.4); // last arg is speed
+    int put_down_code = put_down_object(tgt_angle, dropoff_coords);\
+    // return only final value
+    return put_down_code;
 }
 
+int ManipArmIF::point_at_object(tf::Vector3 src_coords) {
+    double tgt_angle = M_PI*3/2;
+    close_gripper();
+    tf::Vector3 pointing_coords (src_coords[0], src_coords[1], 0.165);
+    go_to_ikpose(tgt_angle, pointing_coords, 0.4); // last arg is speed
+    sleep(3);
+    int homed_ret = go_to_pose(manip_pos_,spdParams_.hoverSpeed);
+    return homed_ret;
+}
 
 // return error codes:
 //
@@ -1133,9 +1150,12 @@ int ManipReadyState::manipObject(double yawangle, tf::Vector3 coords, int type) 
         // less sanity checking; won't always go back to initial position, for example
         retval = machine_->grasp_n_put_object_fast(yawangle, coords);
         break;
-    // Cynthia things
+        // Cynthia things
     case 8:
         retval = machine_->move_object_to_bin(yawangle, coords);
+        break;
+    case 9:
+        retval = machine_->point_at_object(coords);
         break;
 
     default:
