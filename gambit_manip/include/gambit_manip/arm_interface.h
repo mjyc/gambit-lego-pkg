@@ -139,6 +139,10 @@ public:
     int move_object_to_left(double src_yangle, tf::Vector3 src_coords);
     int move_object_to_right(double src_yangle, tf::Vector3 src_coords);
     int move_object_to_offtable(double src_yangle, tf::Vector3 src_coords);
+
+    // Cynthia's
+    int move_object_to_bin(double src_yangle, tf::Vector3 src_coords);
+
     // NOTE - HRI2014 specific
     int grasp_n_put_object(double tgt_yangle, tf::Vector3 tgt_coords);
     int grasp_n_put_object_fast(double tgt_yangle, tf::Vector3 tgt_coords);
