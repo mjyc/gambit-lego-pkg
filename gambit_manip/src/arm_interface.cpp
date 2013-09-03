@@ -294,8 +294,10 @@ ManipArmIF::ManipArmIF(ros::NodeHandle nh)
     spdParams_.manipSpeed = ArmIF::speed_range_check(spdParams_.manipSpeed);
     spdParams_.offviewSpeed = ArmIF::speed_range_check(spdParams_.offviewSpeed);
 
-    //armlib::js_vect ManipArmIF::one_degree_tolerances_ =                    ManipArmIF::make_pos_vector(0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925);
-    one_degree_tolerances_ = ManipArmIF::make_pos_vector(0.03,0.03,0.03,0.03,0.03,0.03,0.03);
+    //armlib::js_vect ManipArmIF::one_degree_tolerances_ =                 ManipArmIF::make_pos_vector(0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925,0.0174532925);
+
+    one_degree_tolerances_ = ManipArmIF::make_pos_vector(0.03,0.03,0.03,0.03,0.03,0.03,0.06);
+
 
     // TODO - make them ros parameters
     //    gripper_length_ = 0.07;
@@ -769,6 +771,13 @@ int ManipArmIF::move_object_to_offtable(double src_yangle, tf::Vector3 src_coord
     return move_object(src_yangle,src_coords,tgt_angle,tgt_coords);
 }
 
+int ManipArmIF::move_object_to_bin(double src_yangle, tf::Vector3 src_coords) {
+    double tgt_angle = M_PI;
+    tf::Vector3 tgt_coords(-0.2,-0.05,0.12);
+    return move_object(src_yangle,src_coords,tgt_angle,tgt_coords);
+}
+
+
 // return error codes:
 //
 // 0: everything is good
@@ -1123,6 +1132,10 @@ int ManipReadyState::manipObject(double yawangle, tf::Vector3 coords, int type) 
     case 7:
         // less sanity checking; won't always go back to initial position, for example
         retval = machine_->grasp_n_put_object_fast(yawangle, coords);
+        break;
+    // Cynthia things
+    case 8:
+        retval = machine_->move_object_to_bin(yawangle, coords);
         break;
 
     default:
