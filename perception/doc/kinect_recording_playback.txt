@@ -1,0 +1,34 @@
+
+[2012.02.14]
+
+
+==== RECORDING ====
+
+Terminal1
+roscore
+
+
+Terminal2
+ROS_NAMESPACE=camera rosrun openni_camera openni_node _depth_registration:=true _rgb_frame_id:=/camera_rgb_optical_frame _depth_frame_id:=/camera_rgb_optical_frame
+
+
+Terminal3 (Recording)
+rosbag record camera/depth_registered/image_raw camera/depth_registered/camera_info camera/rgb/image_raw camera/rgb/camera_info --limit=60 -O kinect
+
+==================
+
+
+
+
+==== PLAYBACK ====
+
+Terminal1
+rosparam set /use_sim_time true
+roslaunch openni_launch openni.launch load_driver:=false
+
+
+Terminal2
+rostopic hz /camera/depth_registered/points  # checking frequency
+rosbag play --clock kinect.bag               # playback
+
+==================

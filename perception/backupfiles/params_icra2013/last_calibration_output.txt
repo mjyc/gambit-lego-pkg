@@ -1,0 +1,27 @@
+Resulting transform (camera frame -> fixed frame): 
+-0.212622 -0.956789  0.198361  0.111292
+-0.910985  0.120679  -0.39439  0.415912
+  0.35341  -0.26456 -0.897279  0.710682
+        0         0         0         1
+
+Resulting transform (fixed frame -> camera frame): 
+    0.35341    -0.26456   -0.897279    0.710682
+   0.212622    0.956789   -0.198361   -0.156292
+   0.910985   -0.120679     0.39439   -0.415912
+4.59093e-41 4.59093e-41 4.59093e-41           1
+
+Static transform publisher (use for external kinect): 
+rosrun tf static_transform_publisher x y z qx qy qz qw frame_id child_frame_id period_in_ms
+rosrun tf static_transform_publisher 0.160959 0.287365 0.770709 -0.0236179 0.54977 -0.145079 0.822282 /arm0 /camera_link 100
+
+URDF output (use for kinect on robot): 
+<?xml version="1.0"?>
+<robot>
+		<property name="turtlebot_calib_cam_x" value="0.160959" />
+		<property name="turtlebot_calib_cam_y" value="0.287365" />
+		<property name="turtlebot_calib_cam_z" value="0.770709" />
+		<property name="turtlebot_calib_cam_rr" value="-0.466011" />
+		<property name="turtlebot_calib_cam_rp" value="1.11357" />
+		<property name="turtlebot_calib_cam_ry" value="-0.6426" />
+		<property name="turtlebot_kinect_frame_name" value="arm0" />
+</robot>
