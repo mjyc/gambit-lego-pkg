@@ -4,6 +4,8 @@
 #include <boost/make_shared.hpp>
 #include <ros/ros.h>
 #include <opencv2/core/core.hpp> // for FPS_CALC_CV
+#include <pcl_conversions/pcl_conversions.h>
+#include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 //#include <tf/transform_listener.h>
 
@@ -103,7 +105,6 @@ public:
         cv::Mat img = bgrFrame_;
         cv::Mat dep = depthFrame_;
 
-        
         if (updateOn_) {
             //tableState_->update(img,dep);
             BOOST_FOREACH(TableEvent event, tableState_->update(img,dep)) {
@@ -111,10 +112,6 @@ public:
                 pub_points_.publish(createPointsMarker(depth_msg->header.frame_id, event));
             }
         }
-
-
-
-        // Controller
 
         //FPS_CALC_CV("event_main_test");
         int key = cv::waitKey(1) % 256;
@@ -144,7 +141,7 @@ public:
     }
 
 };
-const std::string EventMainNodeTest::default_params_path_ = "/home/mjyc/ros/gambit-lego-pkg/gambit_perception/params/";
+const std::string EventMainNodeTest::default_params_path_ = "/home/mjyc/";
 
 
 int main(int argc, char **argv)

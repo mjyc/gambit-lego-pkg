@@ -30,7 +30,7 @@ public:
         ros::shutdown();
     }
 };
-std::string IMaskNode::default_params_path_ = "/home/mjyc/ros/gambit-lego-pkg/gambit_perception/params/";
+std::string IMaskNode::default_params_path_ = "/home/mjyc/";
 
 
 int main(int argc, char **argv)

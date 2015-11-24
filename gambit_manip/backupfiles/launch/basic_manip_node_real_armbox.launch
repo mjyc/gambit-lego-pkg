@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<launch>
-
-    <node pkg="tf" type="static_transform_publisher" name="table_plane_broadcaster" args="0.039 0.424 0.489 -0.040 0.046 2.427 /camera_rgb_optical_frame /table_plane 10" />
-    <node pkg="tf" type="static_transform_publisher" name="arm0_broadcaster" args="0.262 -0.118 0.0 1.69296938 0.0 0.0 /table_plane /arm0 10" />
-
-</launch>

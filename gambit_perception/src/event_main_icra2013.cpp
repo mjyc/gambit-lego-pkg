@@ -14,7 +14,7 @@
 #include <gambit_perception/tf_utils.h>
 
 #include <visualization_msgs/MarkerArray.h>
-#include <gambit_manip/MoveGripper.h>
+// #include <gambit_manip/MoveGripper.h>
 
 
 #define FPS_CALC_CV(_WHAT_) \
@@ -291,7 +291,7 @@ public:
         return marker;
     }
 };
-const std::string EventMainNodeTest::default_params_path_ = "/home/mjyc/Projects/HIL/codes/ros/stacks/ros-pkg-nsl/trunk/gambit_perception/params/";
+const std::string EventMainNodeTest::default_params_path_ = "/home/mjyc/";
 
 
 int main(int argc, char **argv)

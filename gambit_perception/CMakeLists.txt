@@ -1,64 +1,63 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 2.8.3)
+project(gambit_perception)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  image_geometry
+  image_transport
+  message_filters
+  cv_bridge
+  sensor_msgs
+  pcl_conversions
+  pcl_ros
+  nodelet
+  tf
+  visualization_msgs
+)
 
-rosbuild_init()
+find_package(OpenCV REQUIRED core imgproc highgui)
+# find_package(Eigen REQUIRED)
+# include_directories(${EIGEN_INCLUDE_DIRS})
+# add_definitions(${EIGEN_DEFINITIONS})
 
-find_package(Eigen REQUIRED)
-include_directories(${EIGEN_INCLUDE_DIRS})
-add_definitions(${EIGEN_DEFINITIONS})
+catkin_package(
+    # INCLUDE_DIRS include
+    # LIBRARIES
+    CATKIN_DEPENDS roscpp image_geometry image_transport message_filters cv_bridge sensor_msgs pcl_conversions pcl_ros nodelet tf visualization_msgs
+    # DEPENDS
+)
 
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+include_directories(include
+  ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
+  # ${EIGEN_INCLUDE_DIRS}
+)
 
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
+add_executable(interactive_mask src/interactive_mask.cpp)
+target_link_libraries(interactive_mask
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+)
+add_executable(learn_basetable src/learn_basetable.cpp)
+target_link_libraries(learn_basetable
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+)
+add_executable(interactive_area src/interactive_area.cpp)
+target_link_libraries(interactive_area
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+)
 
-#common commands for building c++ executables and libraries
-#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
-#target_link_libraries(${PROJECT_NAME} another_library)
-#rosbuild_add_boost_directories()
-#rosbuild_link_boost(${PROJECT_NAME} thread)
-#rosbuild_add_executable(example examples/example.cpp)
-#target_link_libraries(example ${PROJECT_NAME})
-
-# For debug
-set(CMAKE_CXX_FLAGS "-g -Wall")
-
-rosbuild_add_boost_directories()
-
-# Building other executables
-# Tools
-# rosbuild_add_executable(interactive_mask src/interactive_mask.cpp)
-# rosbuild_link_boost(interactive_mask signals system)
-# rosbuild_add_executable(learn_basetable src/learn_basetable.cpp)
-# rosbuild_link_boost(learn_basetable signals system)
-# rosbuild_add_executable(interactive_area src/interactive_area.cpp)
-# rosbuild_link_boost(interactive_area signals filesystem system)
-# rosbuild_add_executable(capture_iamges src/capture_images.cpp)
-# rosbuild_link_boost(capture_iamges signals filesystem system)
-
-# Tests
-#rosbuild_add_executable(cv_utils_test src/cv_utils_test.cpp)
-#rosbuild_link_boost(cv_utils_test filesystem system)
-
-# Main Programs
-#rosbuild_add_executable(event_main src/event_main.cpp)
-#rosbuild_link_boost(event_main signals system)
-#rosbuild_add_executable(event_main_icra2013 src/event_main_icra2013.cpp)
-#rosbuild_link_boost(event_main_icra2013 signals filesystem system)
-rosbuild_add_executable(event_main_simple_blocksworld src/event_main_simple_blocksworld.cpp)
-rosbuild_link_boost(event_main_simple_blocksworld signals filesystem system)
-
-
+add_executable(event_main src/event_main.cpp)
+add_dependencies(event_main ${catkin_EXPORTED_TARGETS})
+target_link_libraries(event_main
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+)
+add_executable(event_main_simple_blocksworld src/event_main_simple_blocksworld.cpp)
+add_dependencies(event_main_simple_blocksworld ${catkin_EXPORTED_TARGETS})
+target_link_libraries(event_main_simple_blocksworld
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+)

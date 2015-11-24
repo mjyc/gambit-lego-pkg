@@ -48,7 +48,7 @@ findObjectContours(cv::Mat dep, cv::Mat tableModel, cv::Mat mask,
                float min_objsize_frac = MIN_OBJSIZE_FRAC) {
 
     cv::Mat fgMask = subtractTableSimple(dep, tableModel, table_noise_threshold);
-    //cv::imshow("fgMask", fgMask);
+    // cv::imshow("fgMask", fgMask);
     fgMask &= ~superSetHandMask(dep, tableModel, mask); // MASK!
     //cv::imshow("superSetHandMask", ~superSetHandMask(dep, tableModel, mask));
     //cv::imshow("fgMask2", fgMask);

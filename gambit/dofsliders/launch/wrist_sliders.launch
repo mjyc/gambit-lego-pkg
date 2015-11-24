@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-
-<launch>
-    <group ns="wrist">
-        <node pkg="dofsliders" type="dofsliders" name="wrist_sliders" output="screen"/>
-    </group>
-</launch>
-

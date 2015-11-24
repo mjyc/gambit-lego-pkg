@@ -1,9 +1,0 @@
-set(ROS_BUILD_TYPE RelWithDebInfo)
-
-# Uncomment to build arm control loop with real-time Xenomai support
-#set(REALTIME ON)
-
-# Uncomment to build with dummy DOFs for the wrist, allowing the arm to be operated
-# without the wrist present
-#set(DUMMY_WRIST ON)
-

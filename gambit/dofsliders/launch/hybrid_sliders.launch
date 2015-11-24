@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-
-<launch>
-    <group ns="hybrid">
-        <node pkg="dofsliders" type="dofsliders" name="$(anon hybrid_sliders)" output="screen"/>
-    </group>
-</launch>
-

@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-
-<launch>
-    <node pkg="newarm" type="wrist" name="wrist" output="screen" launch-prefix="nice -5">
-        <param name="wrist_pitch_offset" type="double" value="0.111"/>
-        <param name="gripper_offset" type="double" value="0.386"/>
-    </node>
-</launch>
-

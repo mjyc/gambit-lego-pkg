@@ -55,7 +55,7 @@ cv::Mat superSetHandMask(cv::Mat dep, cv::Mat tableModel, cv::Mat mask, \
                       int table_noise_threshold = TABLE_NOISE_THRESHOLD, \
                       float min_handsize_frac = MIN_HANDSIZE_FRAC) {
     cv::Mat depthMask = subtractTableSimple(dep,tableModel,table_noise_threshold);
-    //cv::imshow("fgMask",depthMask);
+    // cv::imshow("fgMask",depthMask);
     return crossedContoursMask(depthMask, mask, min_handsize_frac);
 }
 

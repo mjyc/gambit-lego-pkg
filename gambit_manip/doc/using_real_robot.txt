@@ -1,4 +1,0 @@
-[2013.06.01]
-  see README.txt's [2013.06.01] note in "roscd gambit" in gambit-lego-pkg repo for UNDERSTANDING FOLDERS IN CHESS-ARMBOX
-  see README.txt's [2013.06.01] note in "roscd gambit_kinect_arm_calibration" in gambit-lego-pkg repo for REAL ROBOT CALIBRATION
-

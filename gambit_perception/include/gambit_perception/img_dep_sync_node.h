@@ -43,7 +43,7 @@ public:
         nh_(),
         priv_nh_("~") {
 
-        sub_depth_.subscribe(nh_, "/camera/depth_registered/image_rect", 1);
+        sub_depth_.subscribe(nh_, "/camera/depth_registered/sw_registered/image_rect", 1);
         sub_rgb_  .subscribe(nh_, "/camera/rgb/image_rect_color", 1);
         sub_info_ .subscribe(nh_, "/camera/rgb/camera_info", 1);
 
@@ -110,7 +110,8 @@ public:
         cv_bridge::CvImagePtr cv_ptr_rgb;
         try {
             cv_ptr_depth = cv_bridge::toCvCopy(depth_msg, depth_msg->encoding);
-            cv_ptr_rgb = cv_bridge::toCvCopy(rgb_msg, rgb_msg->encoding);
+            // cv_ptr_rgb = cv_bridge::toCvCopy(rgb_msg, rgb_msg->encoding);
+            cv_ptr_rgb = cv_bridge::toCvCopy(rgb_msg, sensor_msgs::image_encodings::BGR8);
         } catch (cv_bridge::Exception& e) {
             ROS_ERROR("cv_bridge exception: %s", e.what());
             return;

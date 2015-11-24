@@ -55,7 +55,7 @@ public:
             ros::shutdown();
     }
 };
-std::string EventMainNode::default_params_path_ = "/home/mjyc/Projects/HIL/codes/ros/stacks/ros-pkg-nsl/trunk/gambit_perception/params/";
+std::string EventMainNode::default_params_path_ = "/home/mjyc/";
 
 
 int main(int argc, char **argv)
