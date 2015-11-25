@@ -12,10 +12,6 @@ rosrun gambit_perception learn_basetable
 ```
 
 ```
-rosrun gambit_perception learn_basetable
-```
-
-```
 rosrun gambit_perception event_main_simple_blocksworld
 ```
 
